@@ -1,19 +1,9 @@
 # Contributing
 
-Keep the project small: improve source discovery, musical identity, evidence, accessibility or installation. Open an issue describing the request, source and observed outcome before proposing a new service dependency.
+Keep Hear It Live focused on a good chat answer: source-backed performances, exact work matching and honest coverage.
 
-Use Python 3.10+ and the standard library. Run:
+Do not add report generators, calendar exports, websites, background tasks or computer-use fallbacks. Existing playlist input is read-only. Preserve explicit-only invocation in both client packages. Keep personal playlist data out of source and release archives.
 
-```sh
-python3 -m unittest discover -s tests -v
-python3 skills/concert-finder/scripts/report.py examples/krakow-bach.json --check
-python3 skills/concert-finder/scripts/playlist.py examples/playlist-demo.json --require-complete
-python3 skills/concert-finder/scripts/report.py examples/playlist-concerts.json --check
-python3 tools/package.py
-```
+The README screenshot is a genuine user-provided chat excerpt, cropped for privacy. Do not replace it with a simulated conversation or generated UI. Use only real screenshots shared for that purpose.
 
-For research changes, compare the skill with ordinary assistant search on the same input. Record original URLs, checking date, false positives, omissions, latency and any unsupported tools. Do not treat schema validation as factual verification.
-
-Keep `allow_implicit_invocation: false` and the Claude Code equivalent. Do not add always-loaded instructions, hooks, background tasks, telemetry, API credentials or a compulsory hosted service. Any added provider integration needs its current documented access and usage conditions checked first.
-
-Do not commit personal searches, playlist captures, credentials, full third-party webpages or photographs you cannot redistribute. Use clearly labelled synthetic playlist fixtures for tests and screenshots. Event fixtures contain limited facts and links to their publishers; the software licence does not relicense the publishers' original content. Browser readability does not establish a platform policy exemption.
+Use Python 3.10+ and the standard library. Check changes with `python3 -B -m unittest discover -s tests -v` and build distributable skill ZIPs with `python3 -B tools/package.py`. Those are contributor tools, never part of a concert search.

@@ -1,6 +1,6 @@
 interface:
   display_name: "Hear It Live"
-  short_description: "Find concerts from your playlist without computer use"
-  default_prompt: "Use $concert-finder to find performances near me from my complete saved Spotify playlist, using web tools without computer use."
+  short_description: "Find live performances from your playlist, in chat"
+  default_prompt: "Use $concert-finder to find live performances of my playlist near me and show concise, sourced results here in chat."
 policy:
   allow_implicit_invocation: false
