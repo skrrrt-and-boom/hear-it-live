@@ -41,7 +41,7 @@ def validate_capture(data, require_complete=False):
     date.fromisoformat(p['checked_at'])
     total = p.get('total_tracks')
     require(type(total) is int and 0 <= total <= 100000, 'total_tracks must be an integer between 0 and 100000')
-    require(p.get('capture_method') in {'browser', 'demo'}, 'capture_method must be browser or demo')
+    require(p.get('capture_method') in {'browser', 'web', 'demo'}, 'capture_method must be browser, web or demo')
     tracks = data.get('tracks')
     require(isinstance(tracks, list), 'tracks must be a list')
     found, unavailable, normalized = set(), [], []

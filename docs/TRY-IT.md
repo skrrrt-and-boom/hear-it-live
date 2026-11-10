@@ -1,6 +1,6 @@
 # Try it
 
-Install from the repository with `python3 install.py --client codex` or `--client claude-code`. The installer copies the explicit-only skill, without editing assistant settings or installing dependencies. Start a fresh chat with browser controls and web search/page-reading tools available. Tool permissions remain under the host's control.
+Install from the repository with `python3 install.py --client codex` or `--client claude-code`. The installer copies the explicit-only skill without editing assistant settings or installing dependencies. Start a fresh chat with web search/page/PDF fetching available. The skill prohibits computer use; host-level tool permissions remain separate.
 
 ## Playlist link → live performances
 
@@ -11,14 +11,26 @@ $concert-finder Find where and when music from [Spotify playlist link]
 is performed within 50 km of Warsaw in the next 90 days.
 Prioritise churches; include free and paid concerts. Verify the entire
 playlist, keep exact matches separate from leads, and create a programme
-and calendar if file tools are available.
+and calendar if file tools are available. Use a complete saved snapshot;
+do not use computer use or browser automation.
 ```
 
 Replace the bracketed input with a full `https://open.spotify.com/playlist/…` link. In Claude Code use `/concert-finder`.
 
-The opening page only prepares the request. Your assistant reads the visible playlist in the browser, saves overlapping row batches, verifies `1..N` coverage, maps tracks to works, and researches local performances. It can ask about an ambiguous work, but should not ask you to type the whole track list when it is readable.
+The opening page only prepares the request. Your assistant first reuses an attached capture/previous report or looks up a complete saved playlist by link. It verifies `1..N` coverage and discloses the snapshot's checking date, then searches original concert programmes using web tools. It can ask about an ambiguous work without requiring you to type the whole list.
 
-An initial text fetch with no tracks does not establish that the playlist is inaccessible. An interactive browser trial read all 340 positions in a public playlist; the initial view exposed only 25. Other playlists and host capabilities can differ. If full access fails, the skill reports the gap and asks before using a narrower subset. It does not bypass private access, extract tokens or provide a Spotify API importer. [Platform conditions](../skills/concert-finder/references/inputs.md).
+If no complete snapshot exists, the skill tries at most two direct fetches. The tested 340-track playlist exposed only 30 track links on its public page and 100 embed tracks through HTTP. That is not whole-playlist coverage. The skill must stop and explain rather than silently launch UI automation. A separately requested one-time import can supply a complete file for later searches. [Input and platform conditions](../skills/concert-finder/references/inputs.md).
+
+## Save once, search again
+
+```sh
+python3 skills/concert-finder/scripts/playlist_cache.py save /path/to/complete-capture-or-report.json
+python3 skills/concert-finder/scripts/playlist_cache.py load 'https://open.spotify.com/playlist/PLAYLIST_ID'
+```
+
+Replace `PLAYLIST_ID` with the real ID. Captures are stored privately in `~/.cache/hear-it-live/playlists/` (or the configured XDG cache directory). Automatic reuse accepts a checking date up to seven calendar days old. This is an explicitly dated snapshot, not a current Spotify refresh. Personal files are never included in the GitHub repository or skill ZIPs.
+
+In another app/device, attach the complete capture JSON or previous results JSON. A local cache does not travel with the skill. If you edited the Spotify playlist, supply an updated complete capture or explicitly choose the older snapshot. A skill cannot guarantee a hard application-wide tool block; its no-computer-use rule applies to this workflow and does not change your global settings.
 
 ## Existing work-list searches
 

@@ -226,6 +226,7 @@ class InstallerTests(unittest.TestCase):
                     self.assertIn('concert-finder/LICENSE', names)
                     self.assertIn('concert-finder/scripts/report.py', names)
                     self.assertIn('concert-finder/scripts/playlist.py', names)
+                    self.assertIn('concert-finder/scripts/playlist_cache.py', names)
                     self.assertFalse(any('__pycache__' in n for n in names))
                     if 'claude-code' in path.name:
                         self.assertIn('disable-model-invocation: true', z.read('concert-finder/SKILL.md').decode())
