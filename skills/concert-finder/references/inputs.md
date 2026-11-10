@@ -1,13 +1,19 @@
-# Music inputs
+# Playlist input
 
-Use composition names and catalogue numbers supplied directly by the user. Accept a list or text file; ask only about ambiguity that affects matching. Do not turn a recording performer into the requested composer. Keep whole works, movements and arrangements distinct.
+The main input is a public Spotify playlist URL plus a location. Use the browser-assisted procedure in [browser-playlist.md](browser-playlist.md). Do not ask the user to type track titles when the visible playlist can be read in full.
 
-## Spotify links are not an implemented integration
+A real browser trial on 10 November 2026 verified every position in a 340-track public playlist without signing in. A plain page fetch returned no readable text; the interactive browser initially exposed only 25 rows and loaded more while scrolling. This proves that route worked for that playlist, not that all playlists or clients will work.
 
-This release has no Spotify importer, OAuth flow or credentials. A Spotify link alone is insufficient input. Explain this and ask the user to name the works they want to hear; do not quietly substitute artists or analyse only a web preview.
+Only read the requested visible playlist. Private playlists, unavailable tracks, login walls and changing playlist order need an explicit explanation. Do not collect passwords, session cookies or hidden API tokens. Do not download audio, modify playlists or use recommendations as if they belonged to the user's list. Do not publish personal playlist captures in this project.
 
-As checked on 2026-11-10, Spotify's [playlist items endpoint](https://developer.spotify.com/documentation/web-api/reference/get-playlists-items) requires user authorisation and restricts access to owned/collaborative playlists. Its documentation also restricts ingesting Spotify Content into AI models. [Development mode](https://developer.spotify.com/documentation/web-api/concepts/quota-modes) is limited to five allowlisted users and requires the app owner to have Premium. These conditions are distinct from whether a playlist is publicly visible.
+## Platform limits
 
-Do not scrape Spotify pages, extract session credentials, or use copied Spotify API payloads as a workaround. Do not claim permission to feed Spotify metadata to a model. Re-evaluate the official access and content-use conditions before implementing an importer. The work-list workflow is useful independently and does not require Spotify.
+This is an experimental browser-assisted workflow, not an official or Spotify-approved integration. It uses the host's existing browser tools; there is no Spotify API client, hosted scraper or OAuth flow. The local form prepares a request; it does not retrieve Spotify tracks itself.
 
-Other streaming URLs also need a verified, supported input path. If the complete work list is unavailable, say so. This skill never downloads or analyses audio.
+Browser visibility establishes technical access, not permission for every downstream use. Spotify's [Developer Policy](https://developer.spotify.com/policy) and [Developer Terms](https://developer.spotify.com/terms) include restrictions on AI ingestion of Spotify content, including metadata. Reading a public page does not establish an exemption. Recheck the applicable conditions before distributing a Spotify-dependent service or claiming approval. No approval or policy exemption is claimed here.
+
+The [playlist API endpoint](https://developer.spotify.com/documentation/web-api/reference/get-playlists-items) separately restricts playlist access to owned/collaborative playlists for current development integrations. Do not confuse API access rules with what the browser visibly exposes, or substitute private API calls for the documented browser procedure.
+
+## Other inputs
+
+A user-supplied work list or text file remains supported. For another streaming service, establish a complete, supported input path first. If only a preview is available, state its coverage. Never silently search a partial playlist.

@@ -17,6 +17,8 @@ from pathlib import Path
 from urllib.parse import urlencode, urlparse
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+from playlist import validate_capture
+
 
 class ReportError(ValueError):
     pass
@@ -93,6 +95,30 @@ def validate(data):
         work_ids.add(w["id"])
         if "catalogue" in w:
             text(w["catalogue"], "work.catalogue")
+    if 'playlist' in data:
+        capture = validate_capture(data['playlist'], require_complete=True)
+        require(day(capture['playlist']['checked_at'], 'playlist checked_at') <= checked, 'playlist check is after report check')
+        mapping = data.get('track_work_map')
+        require(isinstance(mapping, list), 'playlist reports need track_work_map')
+        positions, mapped_works = set(), set()
+        for item in mapping:
+            require(isinstance(item, dict), 'track mapping must be an object')
+            position = item.get('position')
+            require(type(position) is int and 1 <= position <= capture['playlist']['total_tracks'], 'unknown mapped track position')
+            require(position not in positions, 'duplicate mapped track position')
+            positions.add(position)
+            string_list(item.get('work_ids'), 'mapped work_ids')
+            require(set(item['work_ids']) <= work_ids, 'mapping references unknown work')
+            require(item.get('status') in {'mapped', 'unresolved', 'excluded'}, 'unknown mapping status')
+            require(bool(item['work_ids']) == (item['status'] == 'mapped'), 'only mapped tracks have work IDs')
+            if item['status'] != 'mapped':
+                text(item.get('reason'), 'unmapped track reason')
+            mapped_works.update(item['work_ids'])
+        require(positions == set(range(1, capture['playlist']['total_tracks'] + 1)), 'account for every playlist track in track_work_map')
+        require(mapped_works == work_ids, 'every requested work must come from a playlist track')
+        researched = data.get('researched_work_ids')
+        string_list(researched, 'researched_work_ids')
+        require(len(researched) == len(set(researched)) and set(researched) <= work_ids, 'unknown/duplicate researched work')
     events = data.get("events")
     require(isinstance(events, list), "events must be a list")
     ids, occurrences = set(), set()
@@ -114,6 +140,8 @@ def validate(data):
         require(len(e["work_ids"]) == len(set(e["work_ids"])), "duplicate matched work ID")
         require(set(e["work_ids"]) <= work_ids, "event references an unknown work ID")
         require(e["match"] != "exact" or bool(e["work_ids"]), "exact match needs a requested work ID")
+        if 'playlist' in data:
+            require(set(e['work_ids']) <= set(data['researched_work_ids']), 'matched work is not in researched_work_ids')
         try:
             ZoneInfo(e["timezone"])
         except ZoneInfoNotFoundError as exc:
@@ -175,7 +203,7 @@ def render(data, as_of=None):
     for e in sorted(data["events"], key=lambda x: (x["date"], x["time"] or "99:99")):
         exact = e["match"] == "exact"
         badge = {"exact": "Exact work match", "composer": "Composer match", "nearby": "Nearby concert", "lead": "Unconfirmed lead"}[e["match"]]
-        matched = ''.join(f'<li>{esc(works[i]["title"])} <span>{esc(works[i].get("catalogue", ""))}</span></li>' for i in e["work_ids"])
+        matched = ''.join(f'<li><span class="composer">{esc(works[i]["composer"])}</span> {esc(works[i]["title"])} <span class="catalogue">{esc(works[i].get("catalogue", ""))}</span></li>' for i in e["work_ids"])
         evidence = ''.join(f'<div class="source">{link(s["url"], s["title"] + " ↗")}<p>{esc(s["evidence"])}</p><small>Checked {esc(date_label(s["checked_at"]))}</small></div>' for s in e["sources"])
         maps = "https://www.google.com/maps/search/?" + urlencode({"api": 1, "query": e["address"] + ", " + e["city"]})
         distance = f'{e["distance_km"]:g} km straight-line' if e.get("distance_km") is not None else "Distance not verified"
@@ -186,16 +214,30 @@ def render(data, as_of=None):
 <div class="event-main"><div class="eyebrow"><span class="badge {'exact' if exact else 'lead'}">{badge}</span><span>{esc(e['admission'])}</span></div>
 <h2>{esc(e['title'])}</h2><p class="performers">{esc(' · '.join(e['performers']) or 'Performers not announced')}</p>
 <p class="venue">{esc(e['venue'])} <span>· {esc(e['city'])}</span></p>
-<p class="address">{esc(e['address'])} · {esc(e['timezone'])} · {esc(distance)}</p>
-<ul class="works">{matched}</ul><p class="reason">{esc(e['reason'])}</p>{notice}
-<div class="actions">{link(e['sources'][0]['url'], 'Original announcement ↗', 'primary-link')}{link(maps, 'Directions ↗')}</div>
-<details><summary>Why this result? <span>Programme & sources</span></summary><p>{esc(e['programme'])}</p>{evidence}</details></div></article>''')
+<ul class="works">{matched}</ul>{notice}
+<div class="actions">{link(e['sources'][0]['url'], 'Announcement ↗', 'primary-link')}{link(maps, 'Directions ↗')}</div>
+<details><summary>Programme & details</summary><p class="reason">{esc(e['reason'])}</p><p>{esc(e['programme'])}</p><p>{esc(e['address'])} · {esc(e['timezone'])} · {esc(distance)}</p>{evidence}</details></div></article>''')
     exact_count = sum(e["match"] == "exact" for e in data["events"])
     lead_count = sum(e["match"] == "lead" for e in data["events"])
     matching_count = sum(e["match"] != "lead" for e in data["events"])
     selected = ''.join(f'<li><span>{esc(w["composer"])}</span>{esc(w["title"])} <b>{esc(w.get("catalogue", ""))}</b></li>' for w in q["works"])
     checked_sources = ''.join(f'<li>{link(s["url"], s["title"] + " ↗")}<p>{esc(s["outcome"])}</p></li>' for s in data["sources_checked"])
     notes = ''.join(f'<li>{esc(n)}</li>' for n in data.get("notes", []))
+    playlist_context = '<span class="context-label">Your repertoire</span><strong>Personal work list</strong>'
+    coverage_detail = ''
+    if 'playlist' in data:
+        capture = validate_capture(data['playlist'], require_complete=True)
+        p = capture['playlist']
+        demo = p['capture_method'] == 'demo'
+        playlist_name = esc(p['name']) if demo else link(p['url'], p['name'] + ' ↗')
+        playlist_context = f'<span class="context-label">{"Sample playlist · demonstration" if demo else "From your Spotify playlist"}</span><strong>{playlist_name}</strong><span>{p["total_tracks"]} of {p["total_tracks"]} tracks read · {len(works)} works</span>'
+        unresolved = sum(m['status'] == 'unresolved' for m in data['track_work_map'])
+        excluded = sum(m['status'] == 'excluded' for m in data['track_work_map'])
+        researched_count = len(data['researched_work_ids'])
+        coverage_detail = f'<p>{researched_count} of {len(works)} works researched · {unresolved} tracks unresolved · {excluded} excluded.</p>'
+        gaps = ''.join(f'<li>Track {m["position"]}: {esc(m["reason"])}</li>' for m in data['track_work_map'] if m['status'] != 'mapped')
+        unsearched = ''.join(f'<li>Not researched: {esc(w["composer"])} — {esc(w["title"])}</li>' for w in q['works'] if w['id'] not in data['researched_work_ids'])
+        coverage_detail += f'<ul>{gaps}{unsearched}</ul>' if gaps or unsearched else ''
     today = as_of or date.today()
     stale = '<p class="archive">Archived search: these dates have passed. This is a saved example, not a current events feed.</p>' if day(q["to"], "to") < today else ''
     template = (Path(__file__).resolve().parents[1] / "assets" / "report.html").read_text(encoding="utf-8")
@@ -207,6 +249,8 @@ def render(data, as_of=None):
         "SOURCE_COUNT": str(len(data["sources_checked"])), "SOURCES": checked_sources, "NOTES": notes,
         "ARCHIVE": stale, "EMPTY": '' if data["events"] else '<p class="empty">No verified concerts found in the sources checked. Try a wider date range or radius.</p>',
         "SCOPE": "Church concerts" if q["venue_scope"] == "churches" else "All venues",
+        "PLAYLIST_CONTEXT": playlist_context, "COVERAGE_DETAIL": coverage_detail,
+        "END_DATE": esc(q['to']),
     }
     # One substitution pass: user-provided text can never become a template directive.
     return re.sub(r"\[\[([A-Z_]+)\]\]", lambda m: values[m.group(1)], template)

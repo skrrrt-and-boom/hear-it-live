@@ -6,5 +6,6 @@ __pycache__/
 !.env.example
 dist/
 concert-results/
+playlist-captures/
 .venv/
 work/

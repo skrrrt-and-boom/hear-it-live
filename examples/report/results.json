@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "title": "Your Bach shortlist.",
+  "title": "An evening of Bach.",
   "checked_at": "2026-11-10",
   "query": {
     "location": "Kraków, Poland",
@@ -149,9 +149,89 @@
     }
   ],
   "notes": [
+    "The four-track sample playlist is synthetic and demonstrates deduplication; it is not a capture of a real Spotify playlist. Concert announcements are real, checked on 10 November 2026.",
     "This is a real research snapshot checked on 10 November 2026, not a continuously updated concert feed.",
     "All three venues are in Kraków. Precise distances were not calculated. Times use Europe/Warsaw.",
     "Programme matches were checked by the researching assistant. The report tool validates structure, not source truth.",
     "This focused example does not establish exhaustive city coverage or that an event appears nowhere else."
+  ],
+  "playlist": {
+    "schema_version": 1,
+    "playlist": {
+      "url": "https://open.spotify.com/playlist/0000000000000000000000",
+      "name": "Bach · Organ favourites",
+      "total_tracks": 4,
+      "checked_at": "2026-11-10",
+      "capture_method": "demo"
+    },
+    "tracks": [
+      {
+        "position": 1,
+        "title": "Toccata and Fugue in D minor, BWV 565",
+        "artists": [
+          "Johann Sebastian Bach",
+          "Example organist A"
+        ]
+      },
+      {
+        "position": 2,
+        "title": "Nun komm, der Heiden Heiland, BWV 659",
+        "artists": [
+          "Johann Sebastian Bach",
+          "Example organist A"
+        ]
+      },
+      {
+        "position": 3,
+        "title": "Pièce d’Orgue, BWV 572",
+        "artists": [
+          "Johann Sebastian Bach",
+          "Example organist A"
+        ]
+      },
+      {
+        "position": 4,
+        "title": "Toccata and Fugue in D minor, BWV 565",
+        "artists": [
+          "Johann Sebastian Bach",
+          "Example organist B"
+        ]
+      }
+    ]
+  },
+  "track_work_map": [
+    {
+      "position": 1,
+      "work_ids": [
+        "bach-565"
+      ],
+      "status": "mapped"
+    },
+    {
+      "position": 2,
+      "work_ids": [
+        "bach-659"
+      ],
+      "status": "mapped"
+    },
+    {
+      "position": 3,
+      "work_ids": [
+        "bach-572"
+      ],
+      "status": "mapped"
+    },
+    {
+      "position": 4,
+      "work_ids": [
+        "bach-565"
+      ],
+      "status": "mapped"
+    }
+  ],
+  "researched_work_ids": [
+    "bach-565",
+    "bach-659",
+    "bach-572"
   ]
 }

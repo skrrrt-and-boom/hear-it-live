@@ -1,6 +1,6 @@
 interface:
   display_name: "Hear It Live"
-  short_description: "Find verified classical concerts on demand"
-  default_prompt: "Use $concert-finder to find verified performances of my chosen works near a location."
+  short_description: "Find live performances from your Spotify playlist"
+  default_prompt: "Use $concert-finder to read my Spotify playlist and find where and when its works are performed near my chosen location."
 policy:
   allow_implicit_invocation: false

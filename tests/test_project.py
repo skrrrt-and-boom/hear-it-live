@@ -12,6 +12,7 @@ import unittest
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'skills/concert-finder/scripts'))
 
 
 def module(name, path):
@@ -104,8 +105,8 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(page.count('<article class="event"'), 3)
 
     def test_old_snapshot_is_labelled(self):
-        self.assertIn('Archived search:', report.render(self.data, date(2026, 12, 1)))
-        self.assertNotIn('Archived search:', report.render(self.data, date(2026, 11, 10)))
+        self.assertIn('<p class="archive">Archived search:', report.render(self.data, date(2026, 12, 1)))
+        self.assertNotIn('<p class="archive">Archived search:', report.render(self.data, date(2026, 11, 10)))
 
     def test_empty_result_is_valid(self):
         self.data['events'] = []
@@ -224,6 +225,7 @@ class InstallerTests(unittest.TestCase):
                     self.assertTrue(all(n.startswith('concert-finder/') for n in names))
                     self.assertIn('concert-finder/LICENSE', names)
                     self.assertIn('concert-finder/scripts/report.py', names)
+                    self.assertIn('concert-finder/scripts/playlist.py', names)
                     self.assertFalse(any('__pycache__' in n for n in names))
                     if 'claude-code' in path.name:
                         self.assertIn('disable-model-invocation: true', z.read('concert-finder/SKILL.md').decode())

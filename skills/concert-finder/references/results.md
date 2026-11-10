@@ -2,6 +2,20 @@
 
 After live research, write a UTF-8 JSON file. The renderer does not browse or verify facts. It refuses malformed or inconsistent reports. Work IDs connect events to the user's list; exact-match classification must already be supported by the programme.
 
+## Playlist reports
+
+Add these fields to the report object below:
+
+- `playlist`: the **complete capture object** from `scripts/playlist.py`, including its nested `playlist` metadata and numbered `tracks`. The renderer recomputes coverage and refuses missing or unavailable positions. Keep this file local, outside the public repository.
+- `track_work_map`: one entry per position: `{position, status, work_ids}`. Status `mapped` needs one or more IDs from `query.works`. Status `unresolved` or `excluded` needs empty `work_ids` and a factual `reason`. Every requested work must originate in this mapping.
+- `researched_work_ids`: unique IDs actually investigated in the concert search. A match cannot reference an unresearched work. Unresearched works and unresolved tracks appear in the coverage details.
+
+See `examples/playlist-concerts.json` in the source repository for a complete synthetic example. The report labels `capture_method: "demo"` as a sample and does not link its fictitious playlist. Real captures use `browser`. Do not use demo metadata for a user's actual search.
+
+If the user explicitly chooses a smaller subset after an incomplete capture, save a regular work-list report with a clear note identifying that agreed scope and the missing playlist coverage. Do not call it a whole-playlist report.
+
+## Common report fields
+
 ```json
 {
   "schema_version": 1,

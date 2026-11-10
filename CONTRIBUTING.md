@@ -7,6 +7,8 @@ Use Python 3.10+ and the standard library. Run:
 ```sh
 python3 -m unittest discover -s tests -v
 python3 skills/concert-finder/scripts/report.py examples/krakow-bach.json --check
+python3 skills/concert-finder/scripts/playlist.py examples/playlist-demo.json --require-complete
+python3 skills/concert-finder/scripts/report.py examples/playlist-concerts.json --check
 python3 tools/package.py
 ```
 
@@ -14,4 +16,4 @@ For research changes, compare the skill with ordinary assistant search on the sa
 
 Keep `allow_implicit_invocation: false` and the Claude Code equivalent. Do not add always-loaded instructions, hooks, background tasks, telemetry, API credentials or a compulsory hosted service. Any added provider integration needs its current documented access and usage conditions checked first.
 
-Do not commit personal searches, private playlists, credentials, full third-party webpages or photographs you cannot redistribute. The example contains limited event facts and links to their publishers; the software licence does not relicense the publishers' original content.
+Do not commit personal searches, playlist captures, credentials, full third-party webpages or photographs you cannot redistribute. Use clearly labelled synthetic playlist fixtures for tests and screenshots. Event fixtures contain limited facts and links to their publishers; the software licence does not relicense the publishers' original content. Browser readability does not establish a platform policy exemption.
