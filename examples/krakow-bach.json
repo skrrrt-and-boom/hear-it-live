@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "title": "Your Bach shortlist.",
+  "checked_at": "2026-11-10",
+  "query": {
+    "location": "Kraków, Poland",
+    "radius_km": 50,
+    "from": "2026-11-10",
+    "to": "2026-11-30",
+    "mode": "exact",
+    "venue_scope": "churches",
+    "works": [
+      {
+        "id": "bach-565",
+        "composer": "Johann Sebastian Bach",
+        "title": "Toccata and Fugue in D minor",
+        "catalogue": "BWV 565"
+      },
+      {
+        "id": "bach-659",
+        "composer": "Johann Sebastian Bach",
+        "title": "Nun komm, der Heiden Heiland",
+        "catalogue": "BWV 659"
+      },
+      {
+        "id": "bach-572",
+        "composer": "Johann Sebastian Bach",
+        "title": "Pièce d’Orgue",
+        "catalogue": "BWV 572"
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "varnus-2026-11-14",
+      "title": "Xaver Varnus · Organ recital",
+      "date": "2026-11-14",
+      "time": "20:00",
+      "end_time": "21:00",
+      "timezone": "Europe/Warsaw",
+      "venue": "St Mary’s Basilica",
+      "address": "pl. Mariacki 5",
+      "city": "Kraków",
+      "venue_type": "church",
+      "event_type": "concert",
+      "performers": [
+        "Xaver Varnus, organ"
+      ],
+      "admission": "Free entry",
+      "match": "exact",
+      "work_ids": [
+        "bach-565",
+        "bach-659"
+      ],
+      "reason": "The organiser names BWV 565 and BWV 659 in the published programme. Both are on your work list.",
+      "programme": "Bach organ works and arrangements, followed by an improvisation. The requested organ works BWV 565 and BWV 659 are individually listed.",
+      "notice": "The organiser states that children under six cannot attend.",
+      "sources": [
+        {
+          "title": "Organiser · Muzyka w Diecezji",
+          "url": "https://muzykawdiecezji.pl/kalendarz/xaver-varnus-wegrykanada-koncert-inauguracyjny-xxi-dni-muzyki-sakralnej-im-sw-jana-pawla-ii,11",
+          "checked_at": "2026-11-10",
+          "evidence": "The event page confirms 14 November 2026, 20:00–21:00, pl. Mariacki 5, BWV 565 and BWV 659, and free admission."
+        }
+      ]
+    },
+    {
+      "id": "zalewska-2026-11-17",
+      "title": "Hanna Zalewska · Organ recital",
+      "date": "2026-11-17",
+      "time": "19:00",
+      "end_time": "20:00",
+      "timezone": "Europe/Warsaw",
+      "venue": "Divine Mercy Church",
+      "address": "pl. Raczyńskiego 1, os. Oficerskie",
+      "city": "Kraków",
+      "venue_type": "church",
+      "event_type": "concert",
+      "performers": [
+        "Hanna Zalewska, organ"
+      ],
+      "admission": "Admission not stated",
+      "match": "exact",
+      "work_ids": [
+        "bach-572",
+        "bach-659"
+      ],
+      "reason": "The programme explicitly includes Pièce d’Orgue BWV 572 and the chorale prelude BWV 659.",
+      "programme": "Bach BWV 572 and BWV 659, a Walther concerto, and works by Surzyński.",
+      "sources": [
+        {
+          "title": "Organiser · Muzyka w Diecezji",
+          "url": "https://muzykawdiecezji.pl/kalendarz/hanna-zalewska-recital-organowy-od-bacha-po-surzynskiego,17",
+          "checked_at": "2026-11-10",
+          "evidence": "The page lists 17 November 2026, 19:00–20:00, pl. Raczyńskiego 1, and Bach BWV 572 and BWV 659. Admission was not stated."
+        }
+      ]
+    },
+    {
+      "id": "pijarska-2026-11-15",
+      "title": "Paweł Pociask & Paweł Włodarczyk",
+      "date": "2026-11-15",
+      "time": null,
+      "timezone": "Europe/Warsaw",
+      "venue": "Church of the Transfiguration",
+      "address": "ul. Pijarska 2",
+      "city": "Kraków",
+      "venue_type": "church",
+      "event_type": "concert",
+      "performers": [
+        "Paweł Pociask",
+        "Paweł Włodarczyk"
+      ],
+      "admission": "Unticketed; donation details not stated",
+      "match": "lead",
+      "work_ids": [],
+      "reason": "The church confirms the recital date and performers. The inspected seasonal announcement does not confirm a start time or any of your requested works.",
+      "programme": "Detailed repertoire to be announced. This is a lead, not an exact-work match.",
+      "sources": [
+        {
+          "title": "Venue · Pijarska church",
+          "url": "https://pijarska.pijarzy.pl/news,532.html",
+          "checked_at": "2026-11-10",
+          "evidence": "The seasonal announcement lists the two performers on 15 November 2026 and says concerts are unticketed; detailed programmes will follow."
+        }
+      ]
+    }
+  ],
+  "sources_checked": [
+    {
+      "title": "Organiser’s November calendar",
+      "url": "https://muzykawdiecezji.pl/kalendarz",
+      "outcome": "Used to discover individual recital announcements; festival and non-concert entries were not treated as exact matches."
+    },
+    {
+      "title": "Xaver Varnus · original announcement",
+      "url": "https://muzykawdiecezji.pl/kalendarz/xaver-varnus-wegrykanada-koncert-inauguracyjny-xxi-dni-muzyki-sakralnej-im-sw-jana-pawla-ii,11",
+      "outcome": "Verified date, local time, venue, named works and admission."
+    },
+    {
+      "title": "Hanna Zalewska · original announcement",
+      "url": "https://muzykawdiecezji.pl/kalendarz/hanna-zalewska-recital-organowy-od-bacha-po-surzynskiego,17",
+      "outcome": "Verified date, local time, venue and named works; admission remains unknown."
+    },
+    {
+      "title": "Pijarska church · seasonal announcement",
+      "url": "https://pijarska.pijarzy.pl/news,532.html",
+      "outcome": "A venue-source lead with unannounced repertoire and no start time in the inspected text."
+    }
+  ],
+  "notes": [
+    "This is a real research snapshot checked on 10 November 2026, not a continuously updated concert feed.",
+    "All three venues are in Kraków. Precise distances were not calculated. Times use Europe/Warsaw.",
+    "Programme matches were checked by the researching assistant. The report tool validates structure, not source truth.",
+    "This focused example does not establish exhaustive city coverage or that an event appears nowhere else."
+  ]
+}

@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Hear It Live//Concert Finder//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:07794869e67de9c5e6776d4d@hear-it-live
+DTSTAMP:20261110T000000Z
+DTSTART:20261114T190000Z
+DTEND:20261114T200000Z
+SUMMARY:Xaver Varnus · Organ recital
+LOCATION:St Mary’s Basilica\, pl. Mariacki 5\, Kraków
+DESCRIPTION:The organiser names BWV 565 and BWV 659 in the published progra
+ mme. Both are on your work list.\nFree entry\nChecked: 2026-11-10\nhttps:/
+ /muzykawdiecezji.pl/kalendarz/xaver-varnus-wegrykanada-koncert-inauguracyj
+ ny-xxi-dni-muzyki-sakralnej-im-sw-jana-pawla-ii\,11
+URL:https://muzykawdiecezji.pl/kalendarz/xaver-varnus-wegrykanada-koncert-i
+ nauguracyjny-xxi-dni-muzyki-sakralnej-im-sw-jana-pawla-ii,11
+END:VEVENT
+BEGIN:VEVENT
+UID:f3c3aa4e51570151d8282505@hear-it-live
+DTSTAMP:20261110T000000Z
+DTSTART:20261117T180000Z
+DTEND:20261117T190000Z
+SUMMARY:Hanna Zalewska · Organ recital
+LOCATION:Divine Mercy Church\, pl. Raczyńskiego 1\, os. Oficerskie\, Krak
+ ów
+DESCRIPTION:The programme explicitly includes Pièce d’Orgue BWV 572 and 
+ the chorale prelude BWV 659.\nAdmission not stated\nChecked: 2026-11-10\nh
+ ttps://muzykawdiecezji.pl/kalendarz/hanna-zalewska-recital-organowy-od-bac
+ ha-po-surzynskiego\,17
+URL:https://muzykawdiecezji.pl/kalendarz/hanna-zalewska-recital-organowy-od
+ -bacha-po-surzynskiego,17
+END:VEVENT
+END:VCALENDAR
