@@ -2,7 +2,7 @@
 
 **Your playlist. In concert.**
 
-Paste a Spotify playlist link and choose a place. Hear It Live helps your AI assistant find **where and when that music is performed live** — from concert halls to small recitals buried on church websites.
+Choose a playlist and a place. Using a complete saved playlist, Hear It Live helps your AI assistant find **where and when that music is performed live** — from concert halls to small recitals buried on church websites.
 
 **[Open Hear It Live ↗](https://skrrrt-and-boom.github.io/hear-it-live/)** · [Sample programme](https://skrrrt-and-boom.github.io/hear-it-live/examples/report/) · [Download skills](https://github.com/skrrrt-and-boom/hear-it-live/releases/latest)
 

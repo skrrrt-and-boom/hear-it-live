@@ -114,6 +114,12 @@ class PlaylistReportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Incomplete playlist'):
             report.render(self.data)
 
+    def test_playlist_snapshot_date_is_separate_from_research_date(self):
+        self.data['playlist']['playlist']['checked_at'] = '2026-11-09'
+        page = report.render(self.data)
+        self.assertIn('Playlist snapshot · 9 Nov 2026', page)
+        self.assertIn('Announcements checked 10 Nov 2026', page)
+
     def test_every_track_needs_a_mapping_or_explanation(self):
         self.data['track_work_map'].pop()
         with self.assertRaisesRegex(report.ReportError, 'every playlist track'):

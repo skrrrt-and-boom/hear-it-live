@@ -230,7 +230,7 @@ def render(data, as_of=None):
         p = capture['playlist']
         demo = p['capture_method'] == 'demo'
         playlist_name = esc(p['name']) if demo else link(p['url'], p['name'] + ' ↗')
-        playlist_context = f'<span class="context-label">{"Sample playlist · demonstration" if demo else "From your Spotify playlist"}</span><strong>{playlist_name}</strong><span>{p["total_tracks"]} of {p["total_tracks"]} tracks read · {len(works)} works</span>'
+        playlist_context = f'<span class="context-label">{"Sample playlist · demonstration" if demo else "From your Spotify playlist"}</span><strong>{playlist_name}</strong><span>{p["total_tracks"]} of {p["total_tracks"]} tracks read · {len(works)} works</span><span>Playlist snapshot · {esc(date_label(p["checked_at"]))}</span>'
         unresolved = sum(m['status'] == 'unresolved' for m in data['track_work_map'])
         excluded = sum(m['status'] == 'excluded' for m in data['track_work_map'])
         researched_count = len(data['researched_work_ids'])
